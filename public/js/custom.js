@@ -1,9 +1,6 @@
 var doStuff = function (data) {
 	var blip, obj;
-	obj = {address: "no way dude", data: { bubble: "yeah"}};
-	//blip = new Beacon(obj);
-
-	blip = new Beacon(obj);
+	blip = new Beacon(data);
 	populateCoordList(blip.coords)
   populateLastItem(blip);
 	blip.createBlip();

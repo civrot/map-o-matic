@@ -29,7 +29,7 @@ bl = new BeaconList(ONE_HOUR);
 var Beacon = function (data, foo) {
 	this.address = data.address;
 	this.coords = getCoords(this.address, foo);
-	this.bubble = data.url;
+	this.bubble = data.imageUrl;
 	bl.beacons.push(this);
 };
 
@@ -81,9 +81,6 @@ Beacon.prototype.createBlip = function () {
 	  .duration(1750)
 	  .style("opacity", 0)
 	  .remove();
-
-
-
 };
 
 Beacon.prototype.destroy = function () {
@@ -92,4 +89,3 @@ Beacon.prototype.destroy = function () {
 		.exit()
 		.remove();
 };
-

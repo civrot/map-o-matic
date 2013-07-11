@@ -20,8 +20,6 @@ d3.json('/js/json/us-states.json', function(collection) {
   .attr('stroke-width', '1')
 });
 
-
-
 ws = new WebSocket("ws://localhost:8080");
 
 ws.onmessage = function(evt) {
