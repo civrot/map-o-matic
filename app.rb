@@ -4,34 +4,46 @@ require 'yajl'
 require 'slim'
 require 'sinatra/base'
 require 'thin'
+require 'redis'
 
 $channel = EM::Channel.new
 
 EventMachine.run do
   class App < Sinatra::Base
 
-      get '/' do
-          slim :index
-      end
+    get '/' do
+      slim :index
+    end
 
-      post '/' do
-        $channel.push "POST>: #{params[:text]}"
-      end
+    post '/' do
+      $channel.push "POST>: #{params[:text]}"
+    end
   end
-  
+
   EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 8080) do |ws|
-      ws.onopen {
-        sid = $channel.subscribe { |msg| ws.send msg }
-        $channel.push "#{sid} connected!"
+    ws.onopen do
+      sid = $channel.subscribe { |msg| ws.send msg }
+      $channel.push "[-122.926547,45.725029]"
+      puts "#{sid} connected"
 
-        ws.onmessage { |msg|
-          $channel.push "<#{sid}>: #{msg}"
-        }
+      #redis = Redis.new(:timeout => 0)
+      #redis.subscribe('mapdata') do |on|
+        #on.message do |channel, msg|
+          #data = JSON.parse(msg)
+          #puts "##{channel} -> #{msg}"
+          #$channel.push msg
+        #end
+      #end
 
-        ws.onclose {
-          $channel.unsubscribe(sid)
-        }
-      }
+      ws.onmessage do |msg|
+        puts "received <#{sid}> #{msg}"
+        $channel.push "<#{sid}>: #{msg}"
+      end 
+
+      ws.onclose do 
+        $channel.unsubscribe(sid)
+      end 
+    end 
 
   end
 
