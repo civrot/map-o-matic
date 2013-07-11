@@ -20,31 +20,11 @@ d3.json('/js/json/us-states.json', function(collection) {
   .attr('stroke-width', '1')
 });
 
-coords = projection([-122.926547,45.725029])
-svg.append("circle")
-.attr("cx", coords[0])
-.attr("cy", coords[1])
-.attr("r", 10)
-.style("fill", 'red');
 
-//d3.select("body button").on("click", function() {
-  //svg.selectAll(".select").remove();
 
-  //svg.selectAll(".select")
-  //.data(coords)
-  //.enter().append("circle")
-  //.attr("class", "select")
-  //.attr("cx", coords[0])
-  //.attr("cy", coords[1])
-  //.attr("r", 2)
-  //.style("fill", "none")
-  //.style("stroke", "red")
-  //.style("stroke-opacity", 1e-6)
-  //.style("stroke-width", 3)
-  //.transition()
-  //.duration(750)
-  //.attr("r", 42)
-  //.style("stroke-opacity", 1)
-  //.selectAll(".select").remove();
+ws = new WebSocket("ws://localhost:8080");
 
-//})
+ws.onmessage = function(evt) {
+  doStuff(evt);
+};
+
