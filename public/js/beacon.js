@@ -61,6 +61,15 @@ Beacon.prototype.createBlip = function () {
 	  .style("stroke-opacity", 0)
 		.remove();
 
+	//Draw Circle
+	svg.append("circle")
+		.data(coords)
+		.attr("cx", coords[0])
+		.attr("cy", coords[1])
+		.attr("r", 5)
+		.attr("class", "blip")
+		.style("fill", blipColor);
+
 	svg.append("svg:image")
     .attr("xlink:href", this.imageUrl)
     .attr("x", coords[0] - 20)
@@ -71,8 +80,8 @@ Beacon.prototype.createBlip = function () {
 	  .style("stroke-opacity", 1)
     .style("opacity", .86)
     .transition()
-    .duration(350)
-    .delay(1000)
+    .duration(450)
+    .delay(250)
     .attr("height", "300")
     .attr("width", "300")
     .attr("x", coords[0] - 120)
@@ -80,14 +89,6 @@ Beacon.prototype.createBlip = function () {
     .style("opacity", 0)
     .remove();
 
-	//Draw Circle
-	c = svg.append("circle")
-		.data(coords)
-		.attr("cx", coords[0])
-		.attr("cy", coords[1])
-		.attr("r", 5)
-		.attr("class", "blip")
-		.style("fill", blipColor);
 };
 
 // Beacon.prototype.destroy = function () {

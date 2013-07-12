@@ -15,7 +15,7 @@ var populateLastItem = function (blip) {
 var populateSalesFeed = function (blip) {
 	var ul = $(".feed");
 	if ($(".feed li").length >= 12) {
-		ul.children().pop();
+		$(".feed li:last-child").remove();
 	}
 	if($(".feed li").length > 0) {
 		$(".feed li:first").before("<li><img src='" + blip.imageUrl + "' /></li>");

@@ -75,6 +75,8 @@ body {
 .sales-counter {
 	color: #FFF;
 	text-align: center;
+  font-size: 30px;
+  margin: 10px 0;
 }
 
 .feed li {
