@@ -15,5 +15,6 @@ var populateCoordList = function (coords) {
 }
 
 var populateLastItem = function (blip) {
-	$("#last-item .item").attr("src", blip.imageUrl)
+	$("#last-item .item").attr("src", blip.imageUrl);
+	$(".address").html(blip.address);
 }

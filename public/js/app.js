@@ -20,10 +20,6 @@ d3.json('/js/json/us-states.json', function(collection) {
   .attr('stroke-width', '1')
 });
 
-var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
 ws = new WebSocket("ws://localhost:8181");
 
 ws.onmessage = function(evt) {

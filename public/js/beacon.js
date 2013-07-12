@@ -4,52 +4,52 @@ var BeaconList = function (expireTime) {
 	this.beacons = [];
 };
 
+//A list of each beacons coordinates which are use to identify each blip
 BeaconList.prototype.dataList = function () {
 	var myBeaconCoords = [],
-		self = this;
-	self.beacons.foreach( function (myBeacon, index, array) {
-		myBeaconCoords.push(myBeacon.coords)
-	});
+		n = 0;
+	for(n = 0; n < this.beacons.length; n++) {
+		myBeaconCoords.push(this.beacons[n].coords);
+	}
 	return myBeaconCoords;
 };
 
+//Clean out the beacon list of expired beacons
 BeaconList.prototype.expireOldBeacons = function () {
-	var self = this;
-	self.beacons.foreach( function (myBeacon, index, beaconArray) {
-		if (((new Date) - this.expire) > this.expireTimeInMs) {
-			beaconArray.splice(index--, 1);
-			myBeacon.destroy();
+	var n = 0;
+	for( n = 0; n < this.beacons.length; n++) {
+		if (((new Date) - this.beacons[n].expire) > this.expireTimeInMs) {
+			this.beacons.splice(n, 1);
+			this.beacons[n].destroy();
 		}
-	});
+	}
 };
 
-var ONE_HOUR = 60 * 60 * 1000;
+var ONE_HOUR = 0.5 * 60 * 1000;
 bl = new BeaconList(ONE_HOUR);
 
 var Beacon = function (data) {
 	this.address = data.address;
   this.coords = projection(data.coords);
 	this.imageUrl = data.imageUrl;
+	this.expire = new Date();
 	bl.beacons.push(this);
-};
-
-var getCoords = function (address) {
-	//Address geo locate
-	return projection([x, y]);//projection([this.lat, this.long]);
+	bl.expireOldBeacons();
 };
 
 Beacon.prototype.createBlip = function () {
 	//Use D3 to create blip on map
 	coords = this.coords;
+	blipColor = "#00ccff"
 
 	//Draw ping
 	svg.append("circle")
 	  .attr("cx", coords[0])
 	  .attr("cy", coords[1])
 	  .attr("r", 2)
-	  .style("fill", "red")
+	  .style("fill", blipColor)
 	  .style("opacity", .4)
-	  .style("stroke", "red")
+	  .style("stroke", blipColor)
 	  .style("stroke-opacity", 1)
 	  .style("stroke-width", 3)
 	  .transition()
@@ -59,16 +59,17 @@ Beacon.prototype.createBlip = function () {
 	  .style("stroke-opacity", 0)
 		.remove();
 
-	//Flash image of product
-	svg.append("div")
-		.html("<img src =" + this.imageUrl + "/>")
+	svg.append("svg:image")
+    .attr("xlink:href", this.imageUrl)
     .attr("x", coords[0])
     .attr("y", coords[1])
-    .style("class", "toolTip")
+    .attr("width", "100")
+    .attr("height", "100")
+    .style("opacity", .86)
     .transition()
-	  .duration(1750)
-	  .style("opacity", 0)
-	  .remove();
+    .duration(2000)
+    .style("opacity", 0)
+    .remove();
 
 	//Draw Circle
 	svg.append("circle")
@@ -77,29 +78,13 @@ Beacon.prototype.createBlip = function () {
 		.attr("cy", coords[1])
 		.attr("r", 5)
 		.attr("class", "blip")
-		.style("fill", '#00ccff')
-		.append("div")
-		.style("height", "100px")
-		.style("width", "100px")
-		.style("fill", "red")
-		.on("mouseover", function(d) {
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", .9);
-            tooltip.html("<img src =" + this.imageUrl + "/>")
-                .style("left", (svg.event.pageX) + "px")
-                .style("top", (svg.event.pageY - 28) + "px");
-            })
-		.on("mouseout", function(d) {
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+		.style("fill", blipColor)
+
+
 };
 
 Beacon.prototype.destroy = function () {
-	svg.selectAll("circle")
-		.data(bl.dataList)
-		.exit()
-		.remove();
+	blipData = bl.dataList();
+	var c = svg.selectAll("circle").data(blipData, function(d) { return(d); });
+	c.exit().remove();
 };
