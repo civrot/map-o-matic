@@ -24,7 +24,7 @@ var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-ws = new WebSocket("ws://localhost:8080");
+ws = new WebSocket("ws://localhost:8181");
 
 ws.onmessage = function(evt) {
   data = JSON.parse(evt.data);
