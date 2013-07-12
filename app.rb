@@ -31,15 +31,17 @@ Thread.new do
   redis = Redis.new
   redis.subscribe('mapdata') do |on|
     on.message do |channel, msg|
-      data = JSON.parse(msg)
-      geocoded = Geocoder.search(data["address"])
-
-
-      data["coords"] = [geocoded[0].longitude, geocoded[0].latitude]
-      msg = JSON.generate(data)
-      puts "##{channel} -> #{msg}"
-
-      $channel.push msg
+      begin
+        data = JSON.parse(msg)
+        geocoded = Geocoder.search(data["address"])
+        data["coords"] = [geocoded[0].longitude, geocoded[0].latitude]
+        msg = JSON.generate(data)
+        puts "##{channel} -> #{msg}"
+        $channel.push msg
+      rescue => e
+        #Just report the issue and move on
+        puts "[RESCUED]: #{e.message}"
+      end
     end
   end
 end
