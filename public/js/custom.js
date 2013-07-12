@@ -2,6 +2,7 @@ var doStuff = function (data) {
 	var blip, obj;
 	blip = new Beacon(data);
   populateLastItem(blip);
+  $(".sales-counter").text(bl.beacons.length.toString());
 	blip.createBlip();
 }
 

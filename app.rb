@@ -26,7 +26,7 @@ Thread.new do
 end
 
 Thread.new do
-  Geocoder.configure(:lookup => :google, :cache => Redis.new)
+  Geocoder.configure(:lookup => :geocoder_ca, :cache => Redis.new)
 
   redis = Redis.new
   redis.subscribe('mapdata') do |on|
