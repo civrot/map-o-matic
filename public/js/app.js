@@ -1,10 +1,11 @@
-var width  = 1000,
-height = 800;
+var width  = 1800,
+height = 1500;
 var svg = d3.select("#map").append("svg")
 .attr("width", width)
 .attr("height", height );
 
-var projection = d3.geo.albersUsa().scale(1100);
+var projection = d3.geo.albersUsa().scale(1400);
+projection.translate([575, 360])
 var states = svg.append('g')
 .attr('id', 'states');
 //states.attr("transform", "scale(1, 1)");
