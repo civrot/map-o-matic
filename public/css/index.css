@@ -77,6 +77,29 @@ body {
 	text-align: center;
 }
 
+.feed li {
+	border-right: 1px solid #000;
+	border-left: 1px solid #333;
+	padding: 0 5px;
+	margin: 5px 0;
+	float:left;
+	list-style: none;
+}
+
+.feed li:last-child, .feed li:nth-child(3), .feed li:nth-child(6),
+.feed li:nth-child(9) {
+	border-right: none;
+}
+
+.feed li:first-child, .feed li:nth-child(4), .feed li:nth-child(7),
+.feed li:nth-child(10) {
+	border-left: none;
+}
+
+.feed li img {
+	height:80px;
+}
+
 .toolTip {
 	padding: 5px;
 	border-radius: 4px;
