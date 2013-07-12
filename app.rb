@@ -3,12 +3,13 @@ require 'em-websocket'
 require 'redis'
 require 'geocoder'
 require 'json'
+require 'webrick'
 
 $channel = EM::Channel.new
 SOCKETS = []
 Thread.new do
   EventMachine.run do
-    EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 8080) do |ws|
+    EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 8181) do |ws|
       ws.onopen do
         puts "creating sockets"
         $channel.subscribe { |msg| ws.send msg }
