@@ -36,3 +36,17 @@
 img.item {
 	height: 200px;
 }
+
+.toolTip {
+	padding: 5px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border: 2px solid #2cf;
+	background-color: #2cd;
+	opacity: .86;
+}
+
+.toolTip img {
+	height: 100;
+}

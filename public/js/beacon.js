@@ -26,9 +26,8 @@ BeaconList.prototype.expireOldBeacons = function () {
 var ONE_HOUR = 60 * 60 * 1000;
 bl = new BeaconList(ONE_HOUR);
 
-var Beacon = function (data, foo) {
+var Beacon = function (data) {
 	this.address = data.address;
-	//this.coords = getCoords(this.address, foo);
   this.coords = projection(data.coords);
 	this.imageUrl = data.imageUrl;
 	bl.beacons.push(this);
@@ -48,15 +47,28 @@ Beacon.prototype.createBlip = function () {
 	  .attr("cx", coords[0])
 	  .attr("cy", coords[1])
 	  .attr("r", 2)
-	  .style("fill", "none")
+	  .style("fill", "red")
+	  .style("opacity", .4)
 	  .style("stroke", "red")
-	  .style("stroke-opacity", 1e-6)
+	  .style("stroke-opacity", 1)
 	  .style("stroke-width", 3)
 	  .transition()
 	  .duration(750)
 	  .attr("r", 42)
-	  .style("stroke-opacity", 1)
+	  .style("opacity", 0)
+	  .style("stroke-opacity", 0)
 		.remove();
+
+	//Flash image of product
+	svg.append("div")
+		.html("<img src =" + this.imageUrl + "/>")
+    .attr("x", coords[0])
+    .attr("y", coords[1])
+    .style("class", "toolTip")
+    .transition()
+	  .duration(1750)
+	  .style("opacity", 0)
+	  .remove();
 
 	//Draw Circle
 	svg.append("circle")
@@ -69,19 +81,20 @@ Beacon.prototype.createBlip = function () {
 		.append("div")
 		.style("height", "100px")
 		.style("width", "100px")
-		.style("fill", "red");
-
-	//Flash image of product
-	svg.append("svg:image")
-    .attr("xlink:href", this.imageUrl)
-    .attr("x", coords[0])
-    .attr("y", coords[1])
-    .attr("width", "100")
-    .attr("height", "100")
-    .transition()
-	  .duration(1750)
-	  .style("opacity", 0)
-	  .remove();
+		.style("fill", "red")
+		.on("mouseover", function(d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html("<img src =" + this.imageUrl + "/>")
+                .style("left", (svg.event.pageX) + "px")
+                .style("top", (svg.event.pageY - 28) + "px");
+            })
+		.on("mouseout", function(d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 };
 
 Beacon.prototype.destroy = function () {
