@@ -1,8 +1,8 @@
 var width  = 1800,
 height = 1600;
 var svg = d3.select("body").append("svg")
-  .attr("width", width)
-  .attr("height", height );
+.attr("width", width)
+.attr("height", height );
 
 var projection = d3.geo.albersUsa();
 var states = svg.append('g')
@@ -23,6 +23,6 @@ d3.json('/js/json/us-states.json', function(collection) {
 ws = new WebSocket("ws://localhost:8080");
 
 ws.onmessage = function(evt) {
-  doStuff(evt);
+  data = JSON.parse(evt.data);
+  doStuff(data);
 };
-

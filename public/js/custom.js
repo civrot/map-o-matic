@@ -4,7 +4,6 @@ var doStuff = function (data) {
 	populateCoordList(blip.coords)
   populateLastItem(blip);
 	blip.createBlip();
-	i = i + 1;
 }
 
 var populateCoordList = function (coords) {
@@ -16,5 +15,5 @@ var populateCoordList = function (coords) {
 }
 
 var populateLastItem = function (blip) {
-	$("#last-item .item").attr("src", "http://d1smo01m4xb9gu.cloudfront.net/production/brands/element-eden/shannon-tank_w_teal/front-9a0294-grid.jpg")
+	$("#last-item .item").attr("src", blip.imageUrl)
 }

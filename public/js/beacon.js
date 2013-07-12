@@ -28,8 +28,9 @@ bl = new BeaconList(ONE_HOUR);
 
 var Beacon = function (data, foo) {
 	this.address = data.address;
-	this.coords = getCoords(this.address, foo);
-	this.bubble = data.imageUrl;
+	//this.coords = getCoords(this.address, foo);
+  this.coords = projection(data.coords);
+	this.imageUrl = data.imageUrl;
 	bl.beacons.push(this);
 };
 
@@ -72,7 +73,7 @@ Beacon.prototype.createBlip = function () {
 
 	//Flash image of product
 	svg.append("svg:image")
-    .attr("xlink:href", "http://d1smo01m4xb9gu.cloudfront.net/production/brands/element-eden/shannon-tank_w_teal/front-9a0294-grid.jpg")
+    .attr("xlink:href", this.imageUrl)
     .attr("x", coords[0])
     .attr("y", coords[1])
     .attr("width", "100")
