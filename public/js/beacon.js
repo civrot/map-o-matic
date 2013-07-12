@@ -41,7 +41,7 @@ var Beacon = function (data) {
 Beacon.prototype.createBlip = function () {
 	//Use D3 to create blip on map
 	coords = this.coords;
-	blipColor = "#00ccff"
+	blipColor = "#00ccff";
 
 	//Draw ping
 	svg.append("circle")
@@ -79,7 +79,7 @@ Beacon.prototype.createBlip = function () {
 		.attr("cy", coords[1])
 		.attr("r", 5)
 		.attr("class", "blip")
-		.style("fill", blipColor)
+		.style("fill", blipColor);
 
 	setTimeout ( function() {
 		c.remove();
