@@ -1,4 +1,4 @@
-Sinatra with Websockets Example
+Map-O-Matic
 =============
 
-This is a example of using Sinatra with Websockets using the em-websocket gem.
+Displaying data on a map...
