@@ -1,13 +1,13 @@
-var width  = 1800,
-height = 1600;
-var svg = d3.select("body").append("svg")
+var width  = 1000,
+height = 800;
+var svg = d3.select("#map").append("svg")
 .attr("width", width)
 .attr("height", height );
 
-var projection = d3.geo.albersUsa();
+var projection = d3.geo.albersUsa().scale(1100);
 var states = svg.append('g')
 .attr('id', 'states');
-states.attr("transform", "scale(1, 1)");
+//states.attr("transform", "scale(1, 1)");
 
 d3.json('/js/json/us-states.json', function(collection) {
   states.selectAll('path')
@@ -15,8 +15,8 @@ d3.json('/js/json/us-states.json', function(collection) {
   .enter().append('path')
   .attr('d', d3.geo.path().projection(projection))
   .attr('id', function(d){return d.properties.name.replace(/\s+/g, '')})
-  .attr('fill', 'gray')
-  .attr('stroke', 'white')
+  .attr('fill', '#ddd')
+  .attr('stroke', 'black')
   .attr('stroke-width', '1')
 });
 

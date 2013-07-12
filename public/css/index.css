@@ -1,3 +1,16 @@
+body {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  border-top: 4px solid #0cf;
+}
+
+#map {
+  width: 1000px;
+  height: 800px;
+  margin: 100px auto;
+}
+
 #coords {
 	position: absolute;
 	top: 0;
