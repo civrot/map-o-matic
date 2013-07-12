@@ -77,7 +77,7 @@ Beacon.prototype.createBlip = function () {
 		.attr("cy", coords[1])
 		.attr("r", 5)
 		.attr("class", "blip")
-		.style("fill", 'red')
+		.style("fill", '#00ccff')
 		.append("div")
 		.style("height", "100px")
 		.style("width", "100px")
