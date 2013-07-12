@@ -1,14 +1,3 @@
-#coords {
-	top: -4px;
-	max-height: 400px;
-	overflow-y: scroll;
-}
-
-#coords p {
-	font-size: 10px;
-	line-height: 10px;
-	color: #FFF;
-}
 
 #last-item {
 	bottom: -4px;
